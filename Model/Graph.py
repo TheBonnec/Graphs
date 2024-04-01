@@ -18,3 +18,12 @@ class Graph:
                         ListV[i].addPreviousVertex(ListV[k])
         self.ListV = ListV  
         file.close()  
+
+    def addVertexAlphaOmega(self, ListVertexNoPredecessor : list[Vertex], ListVertexNoSuccessor : list[Vertex]):
+        NbVertex = len(self.ListV)
+        alpha = Vertex("0", 0)
+        omega = Vertex(str(NbVertex),0)
+        for i in range(len(ListVertexNoPredecessor)):
+            ListVertexNoPredecessor[i].addPreviousVertex(alpha)
+        for i in range(len(ListVertexNoSuccessor)):
+            omega.addPreviousVertex(ListVertexNoSuccessor[i])

@@ -15,6 +15,6 @@ class Graph:
             for j in range(1, len(fileCutted[i])):
                 for k in range(len(ListV)):
                     if (fileCutted[i][j] == ListV[k].value):
-                        ListV[i].addNextVertex(ListV[k])
+                        ListV[i].addPreviousVertex(ListV[k])
         self.ListV = ListV  
         file.close()  

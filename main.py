@@ -1,6 +1,10 @@
-from InquirerPy import inquirer
+from Model.Graph import Graph
+
 
 def main():
+    graph = Graph("graph1","GraphsFiles/table2.txt")
+    print(graph.listV[0].value)
+    print(graph.listV[0].previousVertices)
     return
     
 

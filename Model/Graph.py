@@ -1,29 +1,17 @@
-from Vertex import Vertex
+from Model.Vertex import Vertex
+from Model.ReadFile import readingFile
 
 class Graph:
     def __init__(self, name : str, fileName : str) -> None:
         self.name = name
-        fileCutted = 0
-        ListV = 0
-        file = open(fileName, "r")
-        for i in range(len(file)):
-            fileCutted[i] = file.readlines[i].split()
-        for i in range(len(fileCutted)):
-            ListV[i]=Vertex(fileCutted[i][0], fileCutted[i][1])
+        self.listV = readingFile(fileName)
+ 
 
-        for i in range(len(ListV)):
-            for j in range(1, len(fileCutted[i])):
-                for k in range(len(ListV)):
-                    if (fileCutted[i][j] == ListV[k].value):
-                        ListV[i].addPreviousVertex(ListV[k])
-        self.ListV = ListV  
-        file.close()  
-
-    def addVertexAlphaOmega(self, ListVertexNoPredecessor : list[Vertex], ListVertexNoSuccessor : list[Vertex]):
-        NbVertex = len(self.ListV)
+    def addVertexAlphaOmega(self, listVertexNoPredecessor : list[Vertex], listVertexNoSuccessor : list[Vertex]):  
+        nbVertex = len(self.ListV)
         alpha = Vertex("0", 0)
-        omega = Vertex(str(NbVertex),0)
-        for i in range(len(ListVertexNoPredecessor)):
-            ListVertexNoPredecessor[i].addPreviousVertex(alpha)
-        for i in range(len(ListVertexNoSuccessor)):
-            omega.addPreviousVertex(ListVertexNoSuccessor[i])
+        omega = Vertex(str(nbVertex+1),0)
+        for i in range(len(listVertexNoPredecessor)):
+            listVertexNoPredecessor[i].addPreviousVertex(alpha)
+        for i in range(len(listVertexNoSuccessor)):
+            omega.addPreviousVertex(listVertexNoSuccessor[i])

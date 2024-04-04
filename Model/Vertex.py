@@ -14,3 +14,6 @@ class Vertex:
             self.previousVertices.append(vertex)
         else:
             print("\nERROR:\nLocation: Vertex Class - addNextVertex\nDescription: Object passed to function is not a Vertex.")
+
+    def print(self):
+        print("Vertex :",self.value," with duration : ",self.duration)

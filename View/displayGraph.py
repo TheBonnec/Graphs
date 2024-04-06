@@ -1,8 +1,8 @@
 from Model.Graph import Graph
 from tabulate import tabulate as tb
 
-def DisplayGraph(graph : Graph) -> None:
-    listVertices = graph.listV
+def displayGraph(graph : Graph) -> None:
+    listVertices = graph.listVertices
     displayMatrix = []
 
     # Filling the matrix with zeros

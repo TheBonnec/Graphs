@@ -1,10 +1,10 @@
 from Model.Graph import Graph
-from View.displayGraph import DisplayGraph
+from View.displayGraph import displayGraph
 
 
 def main():
     graph = Graph("graph1","GraphsFiles/table2.txt")
-    DisplayGraph(graph)
+    displayGraph(graph)
     return
     
 

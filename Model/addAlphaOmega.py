@@ -15,6 +15,6 @@ def addVertexAlphaOmega(listVertices : list[Vertex]):
                     notSuccessor = 0
         if (notSuccessor == 1):
             omega.addPreviousVertex(listVertices[i])
-    listVertices.append(alpha)
+    listVertices.insert(0, alpha)
     listVertices.append(omega)
     return listVertices

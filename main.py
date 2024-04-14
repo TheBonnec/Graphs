@@ -6,6 +6,7 @@ from View.displayMenu import displayMenu
 def main():
     #graph = Graph("graph1","GraphsFiles/table2.txt")
     #displayGraph(graph)
+    # Test
     displayMenu()
     return
     

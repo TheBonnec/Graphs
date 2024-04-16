@@ -2,35 +2,40 @@ from Model.Graph import Graph
 from Model.Vertex import Vertex
 import networkx as nx
 
-def has_negative_edges(graph: Graph) -> bool:
+def hasNegativeEdges(graph: Graph) -> bool:
     for vertex in graph.listVertices:
         for neighbor in vertex.previousVertices:
             if float(neighbor.duration) < 0:
                 return True  # Negative edge detected
     return False  # No negative edge found
 
-def calculate_latest_dates(graph: Graph):
+def calculateLatestDates(graph: Graph, project_end_date: int) -> dict:
+    # Create a directed graph in NetworkX from the Graph object
     G = nx.DiGraph()
     for vertex in graph.listVertices:
-        for prev_vertex in vertex.previousVertices:
-            G.add_edge(prev_vertex.value, vertex.value, weight=int(vertex.duration))
+        vertex_duration = int(vertex.duration)
+        G.add_node(vertex.value, duration=vertex_duration) 
+        for predecessor in vertex.previousVertices:
+            G.add_edge(predecessor.value, vertex.value)
 
-    # Vérifier s'il y a des cycles dans le graphe
     if not nx.is_directed_acyclic_graph(G):
-        raise ValueError("Le graphe contient un cycle, impossible de calculer les dates les plus tardives.")
-    # --> tri topologique
-    topo_sorted_vertices = list(nx.topological_sort(G))
-    latest_start_times = {vertex: 0 for vertex in topo_sorted_vertices}
+        raise ValueError("The graph contains a cycle, it's impossible to calculate the latest dates.")
 
-    # Initialiser le dernier noeud
-    latest_start_times[topo_sorted_vertices[-1]] = int(graph.listVertices[-1].duration)
+    # Initialize the latest start times with the project end date
+    latest_finish_times = {vertex: project_end_date for vertex in G.nodes}
+    latest_start_times = {vertex: project_end_date for vertex in G.nodes}
 
-    # Calculer les dates les plus tardives en remontant dans le tri topologique
-    for vertex in reversed(topo_sorted_vertices):
-        current_duration = int(next((v.duration for v in graph.listVertices if v.value == vertex), None))
-        for pred in G.predecessors(vertex):
-            latest_start_times[pred] = min(latest_start_times[pred], latest_start_times[vertex] - current_duration)
-    for vertex in topo_sorted_vertices:
-        print(f"Latest start time for task {vertex}: {latest_start_times[vertex]}")
+    G_reverse = G.reverse()
+
+    for vertex in nx.topological_sort(G_reverse):
+        if G_reverse.out_degree(vertex) == 0:
+            latest_finish_times[vertex] = project_end_date
+        else:
+            min_latest_finish = project_end_date
+            for successor in G_reverse.successors(vertex):
+                successor_duration = G.nodes[successor]['duration']
+                min_latest_finish = min(min_latest_finish, latest_finish_times[successor] - successor_duration)
+            latest_finish_times[vertex] = min_latest_finish
+            latest_start_times[vertex] = latest_finish_times[vertex] - G.nodes[vertex]['duration']
 
     return latest_start_times

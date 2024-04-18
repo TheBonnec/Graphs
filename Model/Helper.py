@@ -1,14 +1,87 @@
 from Model.Graph import Graph
 from Model.Vertex import Vertex
-import networkx as nx
+#import networkx as nx
+
+def verifyCycle(graph: Graph) -> bool:
+    # Rosalind Marimond Algorithm to verify if a graph contains a cycle
+    print("\nDetecting the cycle, by using the elimination by predecessors method.")
+
+    eliminateList = []
+    # we iterate while the eliminate vertices is not equal to the number of vertices in the graph
+    while len(eliminateList) < len(graph.listVertices):
+        sourceVertices = []
+        remainingVertices = list(graph.listVertices)
+        tempList = eliminateList.copy()
+
+        # we iterate through the vertices in the graph
+        for vertex in graph.listVertices:
+            predecessors = list(vertex.previousVertices)
+
+            """print("Vertex: ", vertex.value)
+            for predecessor in predecessors:
+                print("Predecessor: ", predecessor.value)"""
+            # if the vertex is not in the eliminate list and it has no more predecessors, we add it to the source vertices
+            if vertex not in eliminateList: 
+                resultPredecessors = [p for p in predecessors if p not in eliminateList]
+                if resultPredecessors == []:
+                    tempList.append(vertex)
+                    sourceVertices.append(vertex.value)
+
+        remainingVertices = [vertex for vertex in remainingVertices if vertex not in tempList]   
+        eliminateList = tempList
+
+        # if the source vertices list is empty after running through all vertices, there is a cycle in the graph
+        if sourceVertices == [] and len(eliminateList) < len(graph.listVertices):
+            print("\n\nCycle detected.")
+            return True # Cycle detected
+
+        # we print the source and the remaining vertices step by step for the traces
+        print("\nSource vertices: ", sourceVertices)
+        print("Eliminating source vertices...")
+        print("Remaining vertices: ", end = "")
+        if remainingVertices == []: print("None")
+        for vertex in remainingVertices:
+            print(vertex.value, end = " ")
+
+    print("\nNo cycle detected.")
+    return False # No cycle detected
+
 
 def hasNegativeEdges(graph: Graph) -> bool:
     for vertex in graph.listVertices:
         for neighbor in vertex.previousVertices:
             if float(neighbor.duration) < 0:
+                print("Negative-weight edge detected.")
                 return True  # Negative edge detected
-    return False  # No negative edge found
+    print("No negative-weight edge detected.")
+    return False  # No negative edge detected
 
+
+def computeRanks(graph: Graph) -> dict:
+    # use of a dictionnary to store the ranks
+    ranks = {vertex: 0 for vertex in graph.listVertices}
+    eliminateList = []
+    k = 0
+    # same algorithm as verifyCycle, but simplified that handle the ranks of the vertices
+    while len(eliminateList) < len(graph.listVertices):
+        tempList = eliminateList.copy()
+        for vertex in graph.listVertices:
+            predecessors = list(vertex.previousVertices)
+            if vertex not in eliminateList: 
+                resultPredecessors = [p for p in predecessors if p not in eliminateList]
+                if resultPredecessors == []:
+                    tempList.append(vertex)
+                    # assign the rank to the vertex
+                    ranks[vertex] = k
+
+        eliminateList = tempList
+        # increment the rank at each iteration
+        k += 1
+    return ranks
+
+
+
+"""
 def calculateLatestDates(graph: Graph, project_end_date: int) -> dict:
     # Create a directed graph in NetworkX from the Graph object
     G = nx.DiGraph()
@@ -39,3 +112,5 @@ def calculateLatestDates(graph: Graph, project_end_date: int) -> dict:
             latest_start_times[vertex] = latest_finish_times[vertex] - G.nodes[vertex]['duration']
 
     return latest_start_times
+
+"""

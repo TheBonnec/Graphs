@@ -51,11 +51,33 @@ def hasNegativeEdges(graph: Graph) -> bool:
     for vertex in graph.listVertices:
         for neighbor in vertex.previousVertices:
             if float(neighbor.duration) < 0:
-                print("\n\nNegative-weight edge detected.")
+                print("Negative-weight edge detected.")
                 return True  # Negative edge detected
-    print("\n\nNo negative-weight edge detected.")
+    print("No negative-weight edge detected.")
     return False  # No negative edge detected
 
+
+def computeRanks(graph: Graph) -> dict:
+    # use of a dictionnary to store the ranks
+    ranks = {vertex: 0 for vertex in graph.listVertices}
+    eliminateList = []
+    k = 0
+    # same algorithm as verifyCycle, but simplified that handle the ranks of the vertices
+    while len(eliminateList) < len(graph.listVertices):
+        tempList = eliminateList.copy()
+        for vertex in graph.listVertices:
+            predecessors = list(vertex.previousVertices)
+            if vertex not in eliminateList: 
+                resultPredecessors = [p for p in predecessors if p not in eliminateList]
+                if resultPredecessors == []:
+                    tempList.append(vertex)
+                    # assign the rank to the vertex
+                    ranks[vertex] = k
+
+        eliminateList = tempList
+        # increment the rank at each iteration
+        k += 1
+    return ranks
 
 
 

@@ -1,13 +1,19 @@
 from Model.Graph import Graph
 from View.displayGraph import displayGraph
 from View.displayMenu import displayMenu
-from Model.Helper import verifyCycle, hasNegativeEdges # calculateLatestDates
+from Model.Helper import verifyCycle, hasNegativeEdges, computeRanks # calculateLatestDates
 
 def main():
-    graph = Graph("graph1", "GraphsFiles/table1.txt")
+    graph = Graph("graph1", "GraphsFiles/tabletest.txt")
     displayGraph(graph)
-    if verifyCycle(graph) and (not hasNegativeEdges(graph)):
+    
+    if not verifyCycle(graph) and not hasNegativeEdges(graph):
         print("This is a scheduling graph.")
+        print("\nComputing and displaying the ranks of each vertices of the graph...")
+        ranks = computeRanks(graph)
+        for vertex, rank in ranks.items():
+            print(f"Rank of task {vertex.value}: {rank}")
+
     else: print("The properties necessary are not satisfied, this is not a scheduling graph.")
 
 

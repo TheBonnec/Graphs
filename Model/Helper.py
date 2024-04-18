@@ -81,6 +81,34 @@ def computeRanks(graph: Graph) -> dict:
 
 
 
+def DijkstraAlgorithm(graph: Graph) -> dict:
+    # use of a dictionnary to store the distances 
+    distances = {vertex: float('inf') for vertex in graph.listVertices}
+    orderVertices = {vertex: None for vertex in graph.listVertices}
+
+    CC = [source for source in graph.listVertices if source.previousVertices == []]
+    distances[CC[0]] = 0
+    M = [vertex for vertex in graph.listVertices if vertex not in CC]
+    
+    while(len(CC) < len(graph.listVertices)):
+        tempList = CC.copy()
+        for vertex in M:
+            predecessors = list(vertex.previousVertices)
+            predecessorsCC = [p for p in predecessors if p in CC]
+            
+        
+        minV = min([distances[vertex] for vertex in M])
+        for vertex in M:
+            if distances[vertex] == minV:
+                tempList.append(vertex)
+        
+        M = [vertex for vertex in M if vertex not in tempList]
+
+        CC = tempList
+        print("CC: ", [vertex.value for vertex in CC])
+
+    
+
 """
 def calculateLatestDates(graph: Graph, project_end_date: int) -> dict:
     # Create a directed graph in NetworkX from the Graph object

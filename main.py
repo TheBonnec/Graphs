@@ -1,11 +1,14 @@
 from Model.Graph import Graph
 from View.displayGraph import displayGraph
 from View.displayMenu import displayMenu
-from Model.Helper import hasNegativeEdges, calculateLatestDates
+from Model.Helper import verifyCycle, hasNegativeEdges, calculateLatestDates
 
 def main():
     graph = Graph("graph1", "GraphsFiles/table1.txt")
-    project_end_date = 50
+    displayGraph(graph)
+    verifyCycle(graph)
+
+    """project_end_date = 50
     if hasNegativeEdges(graph):
         print("Le graphe a des arêtes négatives.")
     else:
@@ -16,7 +19,7 @@ def main():
                 print(f"Latest start time for task {vertex_value}: {start_date}")
             print("Les dates les plus tardives ont été calculées.")
         except ValueError as e:
-            print(e)
+            print(e)"""
 
 if __name__ == "__main__":
     main()

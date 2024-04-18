@@ -2,6 +2,36 @@ from Model.Graph import Graph
 from Model.Vertex import Vertex
 import networkx as nx
 
+def verifyCycle(graph: Graph) -> bool:
+    # Rosalind Marimond Algorithm to verify if a graph contains a cycle
+    print("Detecting the cycle, by using the elimination by predecessors method.")
+
+    eliminateList = []
+    while len(eliminateList) < len(graph.listVertices):
+        sourceVertices = []
+        remainingVertices = list(graph.listVertices)
+        for vertex in graph.listVertices:
+            predecessors = list(vertex.previousVertices)
+            if vertex not in eliminateList:
+                for predecessor in predecessors:
+                    if predecessor in eliminateList:
+                        predecessors.remove(predecessor)
+                if predecessors == []:
+                    eliminateList.append(vertex)
+                    sourceVertices.append(vertex)
+                    remainingVertices.remove(vertex)
+
+        print("Source vertices: ", sourceVertices)
+        print("Eliminating source vertices...")
+        print("Remaining vertices: ", remainingVertices)
+
+        if sourceVertices == [] and len(eliminateList) < len(graph.listVertices):
+            print("Cycle detected.")
+            return True
+    print("No cycle detected.")
+    return False
+
+
 def hasNegativeEdges(graph: Graph) -> bool:
     for vertex in graph.listVertices:
         for neighbor in vertex.previousVertices:

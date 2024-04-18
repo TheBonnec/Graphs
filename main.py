@@ -1,18 +1,17 @@
 from Model.Graph import Graph
 from View.displayGraph import displayGraph
 from View.displayMenu import displayMenu
-from Model.Helper import verifyCycle # hasNegativeEdges, calculateLatestDates
+from Model.Helper import verifyCycle, hasNegativeEdges # calculateLatestDates
 
 def main():
     graph = Graph("graph1", "GraphsFiles/table1.txt")
     displayGraph(graph)
-    verifyCycle(graph)
+    if verifyCycle(graph) and (not hasNegativeEdges(graph)):
+        print("This is a scheduling graph.")
+    else: print("The properties necessary are not satisfied, this is not a scheduling graph.")
+
 
     """project_end_date = 50
-    if hasNegativeEdges(graph):
-        print("Le graphe a des arêtes négatives.")
-    else:
-        print("Le graphe n'a pas d'arêtes négatives.")
         try:
             latest_dates = calculateLatestDates(graph, project_end_date)
             for vertex_value, start_date in latest_dates.items():

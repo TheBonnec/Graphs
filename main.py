@@ -1,7 +1,7 @@
 from Model.Graph import Graph
 from View.displayGraph import displayGraph
 from View.displayMenu import displayMenu
-from Model.Helper import verifyCycle, hasNegativeEdges, calculateLatestDates
+from Model.Helper import verifyCycle # hasNegativeEdges, calculateLatestDates
 
 def main():
     graph = Graph("graph1", "GraphsFiles/table1.txt")

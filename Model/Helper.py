@@ -1,37 +1,48 @@
 from Model.Graph import Graph
 from Model.Vertex import Vertex
-import networkx as nx
+#import networkx as nx
 
 def verifyCycle(graph: Graph) -> bool:
     # Rosalind Marimond Algorithm to verify if a graph contains a cycle
-    print("Detecting the cycle, by using the elimination by predecessors method.")
+    print("\nDetecting the cycle, by using the elimination by predecessors method.")
 
     eliminateList = []
     while len(eliminateList) < len(graph.listVertices):
         sourceVertices = []
         remainingVertices = list(graph.listVertices)
+        tempList = eliminateList.copy()
         for vertex in graph.listVertices:
             predecessors = list(vertex.previousVertices)
-            if vertex not in eliminateList:
-                for predecessor in predecessors:
-                    if predecessor in eliminateList:
-                        predecessors.remove(predecessor)
-                if predecessors == []:
-                    eliminateList.append(vertex)
-                    sourceVertices.append(vertex)
-                    remainingVertices.remove(vertex)
 
-        print("Source vertices: ", sourceVertices)
-        print("Eliminating source vertices...")
-        print("Remaining vertices: ", remainingVertices)
+            """print("Vertex: ", vertex.value)
+            for predecessor in predecessors:
+                print("Predecessor: ", predecessor.value)"""
+            
+            if vertex not in eliminateList:
+                resultPredecessors = [p for p in predecessors if p not in eliminateList]
+                if resultPredecessors == []:
+                    tempList.append(vertex)
+                    sourceVertices.append(vertex.value)
+
+        remainingVertices = [vertex for vertex in remainingVertices if vertex not in tempList]   
+        eliminateList = tempList
 
         if sourceVertices == [] and len(eliminateList) < len(graph.listVertices):
-            print("Cycle detected.")
+            print("\n\nCycle detected.")
             return True
-    print("No cycle detected.")
+
+        print("\nSource vertices: ", sourceVertices)
+        print("Eliminating source vertices...")
+        print("Remaining vertices: ", end = "")
+        if remainingVertices == []: print("None")
+        for vertex in remainingVertices:
+            print(vertex.value, end = " ")
+
+    print("\nNo cycle detected.")
     return False
 
 
+"""
 def hasNegativeEdges(graph: Graph) -> bool:
     for vertex in graph.listVertices:
         for neighbor in vertex.previousVertices:
@@ -69,3 +80,5 @@ def calculateLatestDates(graph: Graph, project_end_date: int) -> dict:
             latest_start_times[vertex] = latest_finish_times[vertex] - G.nodes[vertex]['duration']
 
     return latest_start_times
+
+"""

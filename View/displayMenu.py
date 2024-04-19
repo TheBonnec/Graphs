@@ -4,6 +4,8 @@ from InquirerPy.base.control import Choice
 from InquirerPy.separator import Separator
 from View.displayGraph import displayGraph
 from Model.Graph import Graph
+from Model.Helper import*
+from tabulate import tabulate as tb
 
 def displayMenu(): 
     listTable = getListFiles()
@@ -35,10 +37,38 @@ def displayMenu():
             match actionChoice:
                 case 1:
                    displayGraph(graph)
-                #case 2:
-                #    verifyCycle(graph)
-                #    verifyNegativeEdge(graph)
-
+                case 2:
+                    if not verifyCycle(graph) and not hasNegativeEdges(graph):
+                        print("This is a scheduling graph. It has no cycle and no negative edges")
+                case 3:
+                    if not verifyCycle(graph) and not hasNegativeEdges(graph):
+                        print("This is a scheduling graph.")
+                        print("\nComputing and displaying the ranks of each vertices of the graph...")
+                        ranks = computeRanks(graph)
+                        ranksValues = list(ranks.values())
+                        Vertices = [vertex.value for vertex in list(ranks.keys())]
+                        ranksValues.insert(0, "ranks")
+                        Vertices.insert(0, "Vertices")
+                        print(tb([Vertices, ranksValues], headers='firstrow'))
+                    else: print("The properties necessary are not satisfied, this is not a scheduling graph.")
+                case 4:
+                    if not verifyCycle(graph) and not hasNegativeEdges(graph):
+                        print("This is a scheduling graph.")
+                        print("\nComputing and displaying the ranks of each vertices of the graph...")
+                        ranks = computeRanks(graph)
+                        ranksValues = list(ranks.values())
+                        Vertices = [vertex.value for vertex in list(ranks.keys())]
+                        ranksValues.insert(0, "ranks")
+                        Vertices.insert(0, "Vertices")
+                        earliestDates = calculateEarliestDates(graph, ranks)
+                        earliestDatesValues = list(earliestDates.values())
+                        earliestDatesValues.insert(0, "Earliest Dates")
+                        """                        
+                        latestDates = calculateLatestDates(graph, earliestDatesValues[-1])
+                        latestDatesValues = list(latestDates.values())
+                        latestDatesValues.insert(0,"Latest Dates")
+                        """
+                        print(tb([Vertices, ranksValues, earliestDatesValues], headers='firstrow'))
 
 
 

@@ -4,18 +4,8 @@ from View.displayMenu import displayMenu
 from Model.Helper import verifyCycle, hasNegativeEdges, computeRanks # calculateLatestDates
 
 def main():
-    graph = Graph("graph1", "GraphsFiles/tabletest.txt")
-    displayGraph(graph)
-    
-    if not verifyCycle(graph) and not hasNegativeEdges(graph):
-        print("This is a scheduling graph.")
-        print("\nComputing and displaying the ranks of each vertices of the graph...")
-        ranks = computeRanks(graph)
-        for vertex, rank in ranks.items():
-            print(f"Rank of task {vertex.value}: {rank}")
 
-    else: print("The properties necessary are not satisfied, this is not a scheduling graph.")
-
+    displayMenu()
 
     """project_end_date = 50
         try:

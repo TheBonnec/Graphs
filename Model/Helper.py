@@ -119,7 +119,7 @@ def pifPafPoufRemettreLeGrapheAlEndroit(graph: Graph) -> Graph:
 
 
 # Dijkstra's algorithm but trying with working by successors
-def DijkstraAlgorithm(graph: Graph) -> dict:
+#def DijkstraAlgorithm(graph: Graph) -> dict:
 
 
 

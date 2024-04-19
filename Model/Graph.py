@@ -1,5 +1,4 @@
 from Model.Vertex import Vertex
-from Model.InvertedVertex import InvertedVertex
 from Model.ReadFile import readFile
 
 

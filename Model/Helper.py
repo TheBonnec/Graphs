@@ -2,6 +2,7 @@ from Model.Graph import Graph
 from Model.Vertex import Vertex
 #import networkx as nx
 
+
 def verifyCycle(graph: Graph) -> bool:
     # Rosalind Marimond Algorithm to verify if a graph contains a cycle
     print("\nDetecting the cycle, by using the elimination by predecessors method.")
@@ -80,8 +81,20 @@ def computeRanks(graph: Graph) -> dict:
     return ranks
 
 
+def calculateEarliestDates (graph : Graph, ranks : dict) -> dict:
+    earliestDates = {vertex: 0 for vertex in graph.listVertices}
+    omega = graph.listVertices[-1]
+    for i in range(ranks[omega]+1):
+        listVerticesOfRankI = [k for k, v in ranks.items() if v==i]
+        for vertex in listVerticesOfRankI:
+            if vertex.previousVertices != []:
+                earliestFinishDate = earliestDates[vertex.previousVertices[0]] + int(vertex.previousVertices[0].duration)
+                for i in range(len(vertex.previousVertices)):
+                    earliestFinishDate = max(earliestFinishDate, earliestDates[vertex.previousVertices[i]] + int(vertex.previousVertices[i].duration))
+                earliestDates[vertex] =  earliestFinishDate
+    return earliestDates
 
-"""
+
 def calculateLatestDates(graph: Graph, project_end_date: int) -> dict:
     # Create a directed graph in NetworkX from the Graph object
     G = nx.DiGraph()
@@ -112,5 +125,3 @@ def calculateLatestDates(graph: Graph, project_end_date: int) -> dict:
             latest_start_times[vertex] = latest_finish_times[vertex] - G.nodes[vertex]['duration']
 
     return latest_start_times
-
-"""

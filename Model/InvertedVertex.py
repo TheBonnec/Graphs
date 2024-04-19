@@ -1,6 +1,5 @@
 from uuid import uuid4
 
-
 class InvertedVertex:
     def __init__(self, value: str, duration: int) -> None:
         self.id = uuid4()

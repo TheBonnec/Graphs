@@ -1,5 +1,7 @@
 from Model.Graph import Graph
 from Model.Vertex import Vertex
+from Model.InvertedVertex import InvertedVertex
+
 #import networkx as nx
 
 def verifyCycle(graph: Graph) -> bool:
@@ -80,7 +82,49 @@ def computeRanks(graph: Graph) -> dict:
     return ranks
 
 
+def invertGraph(graph: Graph) -> Graph:
+    invertedVertices = {}
 
+    # Création des InvertedVertex correspondants
+    for vertex in graph.listVertices:
+        invertedVertices[vertex.id] = InvertedVertex(vertex.value, vertex.duration)
+
+    # Ajout des successeurs
+    for vertex in graph.listVertices:
+        for previousVertex in vertex.previousVertices:
+            invertedVertices[previousVertex.id].addNextVertex(invertedVertices[vertex.id])
+
+    newInvertedGraph = Graph(graph.name, graph.fileName)
+    newInvertedGraph.listVertices = list(invertedVertices.values())
+
+    return newInvertedGraph
+
+
+def pifPafPoufRemettreLeGrapheAlEndroit(graph: Graph) -> Graph:
+    normalVertices = {}
+
+    # Création des Vertex correspondants
+    for vertex in graph.listVertices:
+        normalVertices[vertex.id] = Vertex(vertex.value, vertex.duration)
+
+    # Ajout des prédécesseurs
+    for vertex in graph.listVertices:
+        for nextVertex in vertex.previousVertices:
+            normalVertices[nextVertex.id].addPreviousVertex(normalVertices[vertex.id])
+
+    newInvertedGraph = Graph(graph.name, graph.fileName)
+    newInvertedGraph.listVertices = list(normalVertices.values())
+
+    return newInvertedGraph
+
+
+# Dijkstra's algorithm but trying with working by successors
+def DijkstraAlgorithm(graph: Graph) -> dict:
+
+
+
+
+# Dijkstra's algorithm but trying with working by predecessors
 def DijkstraAlgorithm(graph: Graph) -> dict:
     # use of a dictionnary to store the distances 
     distances = {vertex: float('inf') for vertex in graph.listVertices}

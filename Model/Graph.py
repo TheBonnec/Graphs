@@ -1,10 +1,12 @@
 from Model.Vertex import Vertex
+from Model.InvertedVertex import InvertedVertex
 from Model.ReadFile import readFile
 
 
 class Graph:
     def __init__(self, name : str, fileName : str) -> None:
         self.name : str = name
+        self.fileName = fileName
         self.listVertices : list[Vertex] = self.getVertices(fileName = fileName)
 
 

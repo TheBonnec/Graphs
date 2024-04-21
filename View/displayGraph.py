@@ -1,7 +1,11 @@
 from Model.Graph import Graph
 from tabulate import tabulate as tb
+from View.Tools import *
 
 def displayGraph(graph : Graph) -> None:
+    clearConsole()
+    title()
+
     listVertices = graph.listVertices
     displayMatrix = []
 
@@ -23,6 +27,8 @@ def displayGraph(graph : Graph) -> None:
 
     # Displaying the Matrix in the terminal
     print(tb(displayMatrix, headers=list(range(len(listVertices))), showindex="always"))
+
+    input("\nExit : ")
 
 
 

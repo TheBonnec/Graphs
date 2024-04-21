@@ -1,6 +1,6 @@
 from Model.Graph import Graph
 from Model.Vertex import Vertex
-#import networkx as nx
+import networkx as nx
 
 
 def verifyCycle(graph: Graph) -> bool:

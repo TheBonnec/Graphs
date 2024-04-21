@@ -130,5 +130,5 @@ def calculateCriticalPath(float : dict, graph : Graph, ranks: dict):
                 else :
                     for criticalPath in listCriticalPath:
                         criticalPath.append(vertex.value)
-        previousVertex = vertex
+            previousVertex = vertex
     return listCriticalPath

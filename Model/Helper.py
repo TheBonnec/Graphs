@@ -1,6 +1,6 @@
 from Model.Graph import Graph
 from Model.Vertex import Vertex
-#import networkx as nx
+
 
 
 def verifyCycle(graph: Graph) -> bool:
@@ -95,6 +95,35 @@ def calculateEarliestDates (graph : Graph, ranks : dict) -> dict:
     return earliestDates
 
 
+def calculateLatestDates(graph : Graph, ranks: dict, earliestDates: dict)-> dict:
+    omega = graph.listVertices[-1]
+    latestDates = {vertex: earliestDates[omega] for vertex in graph.listVertices}
+    for i in range(ranks[omega]+1, 0, -1):
+        listVerticesOfRankI = [k for k, v in ranks.items() if v==i]
+        for vertex in listVerticesOfRankI:
+            for previousVertex in vertex.previousVertices:
+                latestDates[previousVertex] = min(latestDates[previousVertex], latestDates[vertex] - int(previousVertex.duration))
+    return latestDates
+
+
+
+def calculateFloats(earliestDates: dict, latestDates: dict, graph : Graph) -> dict:
+    float = {vertex: 0 for vertex in graph.listVertices}
+    for vertex in graph.listVertices:
+        float[vertex] = latestDates[vertex] - earliestDates[vertex]
+    return float
+
+
+def calculateCriticalPath(float : dict, graph : Graph):
+    criticalPath = []
+    for vertex in graph.listVertices:
+        if float[vertex] == 0:
+            criticalPath.append(vertex.value)
+    return criticalPath
+
+
+
+"""
 def calculateLatestDates(graph: Graph, project_end_date: int) -> dict:
     # Create a directed graph in NetworkX from the Graph object
     G = nx.DiGraph()
@@ -125,3 +154,4 @@ def calculateLatestDates(graph: Graph, project_end_date: int) -> dict:
             latest_start_times[vertex] = latest_finish_times[vertex] - G.nodes[vertex]['duration']
 
     return latest_start_times
+"""

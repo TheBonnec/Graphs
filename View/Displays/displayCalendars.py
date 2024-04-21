@@ -18,7 +18,7 @@ def displayCalendars(graph: Graph):
     earliestDatesValues = list(earliestDates.values())
     earliestDatesValues.insert(0, "Earliest Dates")    
 
-    latestDates = calculateLatestDates(graph, earliestDatesValues[-1])
+    latestDates = calculateLatestDates(graph, ranks, earliestDates)
     latestDatesValues = list(latestDates.values())
     latestDatesValues.insert(0, "Latest Dates")
     print(tb([vertices, ranksValues, earliestDatesValues, latestDatesValues], headers='firstrow'))

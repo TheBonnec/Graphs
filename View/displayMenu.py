@@ -92,24 +92,3 @@ def displayMenu():
                         criticalPath = calculateCriticalPath(floats, graph, ranks)
                         criticalPathList = list(criticalPath)
                         print("The critical path(s) is (are) : ",criticalPathList)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

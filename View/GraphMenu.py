@@ -2,9 +2,11 @@ from Model.Graph import Graph
 from InquirerPy import inquirer
 from View.Tools import *
 from Model.Helper import *
-from View.displayGraph import displayGraph
-from View.displayRanks import displayRanks
-from View.displayCalendars import displayCalendars
+from View.Displays.displayGraph import displayGraph
+from View.Displays.displayRanks import displayRanks
+from View.Displays.displayCalendars import displayCalendars
+from View.Displays.displayFloats import displayFloats
+from View.Displays.displayCriticalPath import displayCriticalPath
 from InquirerPy.base.control import Choice
 from InquirerPy.separator import Separator
 
@@ -74,9 +76,9 @@ def graphMenu(graph: Graph):
             elif menu == optionCalendars.value:
                 displayCalendars(graph = graph)
             elif menu == optionFloats.value:
-                print("Floats")
-            elif menu == optionCriticalPaths:
-                print("Critical Path")
+                displayFloats(graph = graph)
+            elif menu == optionCriticalPaths.value:
+                displayCriticalPath(graph = graph)
 
 
     

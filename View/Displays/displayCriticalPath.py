@@ -12,9 +12,19 @@ def displayCriticalPath(graph: Graph):
     latestDates = calculateLatestDates(graph, ranks, earliestDates)
     floats = calculateFloats(earliestDates, latestDates, graph)
 
-    criticalPath = calculateCriticalPath(floats, graph)
-    criticalPathList = list(criticalPath)
+    criticalPaths = calculateCriticalPath(floats, graph, ranks)
 
-    print("The critical path is : ", criticalPathList)
+    if len(criticalPaths) < 2:
+        print("The critical path is :\n")
+    else:
+        print("The critical paths are :\n")
+
+    for criticalPath in criticalPaths:
+        display = ""
+        for index in range(len(criticalPath) - 1):
+            display += criticalPath[index] + " -> "
+        display += criticalPath[-1]
+        print(display)
+
 
     input("\nExit : ")

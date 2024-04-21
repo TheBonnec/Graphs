@@ -1,5 +1,5 @@
-from Model.Vertex import Vertex
 from Model.ReadFile import readFile
+from Model.Vertex import Vertex
 
 
 class Graph:

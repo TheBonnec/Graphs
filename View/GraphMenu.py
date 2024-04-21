@@ -1,14 +1,14 @@
-from Model.Graph import Graph
-from InquirerPy import inquirer
-from View.Tools import *
-from Model.Helper import *
-from View.Displays.displayGraph import displayGraph
-from View.Displays.displayRanks import displayRanks
+from View.Displays.displayCriticalPath import displayCriticalPath
 from View.Displays.displayCalendars import displayCalendars
 from View.Displays.displayFloats import displayFloats
-from View.Displays.displayCriticalPath import displayCriticalPath
+from View.Displays.displayGraph import displayGraph
+from View.Displays.displayRanks import displayRanks
 from InquirerPy.base.control import Choice
 from InquirerPy.separator import Separator
+from InquirerPy import inquirer
+from Model.Graph import Graph
+from Model.Helper import *
+from View.Tools import *
 
 
 

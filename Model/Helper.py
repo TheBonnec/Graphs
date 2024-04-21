@@ -122,26 +122,34 @@ def pifPafPoufRemettreLeGrapheAlEndroit(graph: Graph) -> Graph:
 def DijkstraAlgorithm(graph: Graph) -> dict:
     # inverse the structure of data to have a graph working with successors
     invertedGraph = invertGraph(graph)
-
     # use of a dictionnary to store the distances
     distances = {vertex: float('inf') for vertex in invertedGraph.listVertices}
-    orderVertices = {vertex: None for vertex in invertedGraph.listVertices}
+    distances[invertedGraph.listVertices[0]] = 0
+    orderVertices = {invertex: None for invertex in invertedGraph.listVertices}
 
     # CC as the list of eliminate vertices, and M as the list of remaining vertices
-    CC = [source for source in graph.listVertices if source.previousVertices == []]
-    M = [vertex for vertex in invertedGraph.listVertices if vertex not in CC]
-
+    CC = [source for source in invertedGraph.listVertices if source.value == "0"]
+    M = [invertex for invertex in invertedGraph.listVertices if invertex not in CC]
+    
     while(len(CC) < len(invertedGraph.listVertices)):
-        tempList = CC.copy()
-        for vertex in CC:
-            successors = list(vertex.nextVertices)
+        tempList = CC
+        
+        for vertex in M:
+            
+            successors = vertex.nextVertices
             minVertex = None
             for successor in successors:
+
+                #print("Vertex: ", vertex.value, " Successor: ", successor.value, " Distance: ", distances[successor], " Duration: ", vertex.duration)
+                #print(type(distances[vertex]), type(vertex.duration), type(distances[minVertex]))
+
                 if distances[successor] > distances[vertex] + vertex.duration:
-                    distances[successor] = distances[vertex] + vertex.duration
-                    if distances[successor] < distances[minVertex]:
+                    distances[successor] = distances[vertex] + int(vertex.duration)
+                    if distances[successor] < distances[minVertex] or minVertex == None:
                         minVertex = successor
-            if minVertex is not None:
+                        print(minVertex.value)
+
+            if minVertex not in tempList:
                 tempList.append(minVertex)
                 print("Vertex: ", vertex.value, " Successor: ", minVertex.value, " Distance: ", distances[minVertex])
                 

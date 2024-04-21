@@ -4,7 +4,7 @@ from View.displayMenu import displayMenu
 from Model.Helper import verifyCycle, hasNegativeEdges, computeRanks, DijkstraAlgorithm # calculateLatestDates
 
 def main():
-    graph = Graph("graph1", "GraphsFiles/tabletest.txt")
+    graph = Graph("graph1", "GraphsFiles/table1.txt")
     displayGraph(graph)
     DijkstraAlgorithm(graph)
 

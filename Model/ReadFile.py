@@ -9,7 +9,7 @@ def readFile(fileName : str):
     for i in range(len(fileLines)):
         fileCutted.append(fileLines[i].split())
     for i in range(len(fileCutted)):
-        listVertices.append(Vertex(fileCutted[i][0], fileCutted[i][1]))
+        listVertices.append(Vertex(fileCutted[i][0], int(fileCutted[i][1])))
     for i in range(len(fileCutted)):
         for j in range(2, len(fileCutted[i])):
             for k in range(len(listVertices)):

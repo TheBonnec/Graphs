@@ -80,7 +80,7 @@ def computeRanks(graph: Graph) -> dict:
     return ranks
 
 
-def calculateEarliestDates (graph : Graph, ranks : dict) -> dict:
+def calculateEarliestDates(graph : Graph, ranks : dict) -> dict:
     earliestDates = {vertex: 0 for vertex in graph.listVertices}
     omega = graph.listVertices[-1]
     for i in range(ranks[omega]+1):
@@ -94,7 +94,7 @@ def calculateEarliestDates (graph : Graph, ranks : dict) -> dict:
     return earliestDates
 
 
-def calculateLatestDates(graph : Graph, ranks: dict, earliestDates: dict)-> dict:
+def calculateLatestDates(graph : Graph, ranks: dict, earliestDates: dict) -> dict:
     omega = graph.listVertices[-1]
     latestDates = {vertex: earliestDates[omega] for vertex in graph.listVertices}
     for i in range(ranks[omega]+1, 0, -1):

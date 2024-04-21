@@ -3,9 +3,15 @@ from Model.Graph import Graph
 from View.Tools import *
 
 
+def ecrire(contenu):
+    nom_fichier = "Model/traceFile.txt"
+    with open(nom_fichier, 'a') as fichier:
+        fichier.write(contenu)
+
 def displayGraph(graph : Graph) -> None:
     clearConsole()
-    title()
+    print(f"\n   {graph.name}")
+    #title()
 
     listVertices = graph.listVertices
     displayMatrix = []
@@ -27,7 +33,8 @@ def displayGraph(graph : Graph) -> None:
             displayMatrix[i][k] = displayMatrix[i][k] * int(listVertices[i].duration)
 
     # Displaying the Matrix in the terminal
-    print(tb(displayMatrix, headers=list(range(len(listVertices))), showindex="always"))
+    # print(tb(displayMatrix, headers=list(range(len(listVertices))), showindex="always"))
+    ecrire(tb(displayMatrix, headers=list(range(len(listVertices))), showindex="always"))
 
     input("\nExit : ")
 

@@ -7,7 +7,7 @@ from View.Tools import *
 def displayRanks(graph: Graph):
     clearConsole()
     title()
-
+    
     ranks = computeRanks(graph)
     ranksValues = list(ranks.values())
     Vertices = [vertex.value for vertex in list(ranks.keys())]

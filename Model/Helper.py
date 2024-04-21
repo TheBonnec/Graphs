@@ -11,7 +11,7 @@ def ecrire(contenu):
 
 def verifyCycle(graph: Graph) -> bool:
     # Rosalind Marimond Algorithm to verify if a graph contains a cycle
-    ecrire("\nDetecting the cycle, by using the elimination by predecessors method.")
+    ecrire("\n\nDetecting the cycle, by using the elimination by predecessors method.")
 
     eliminateList = []
     # we iterate while the eliminate vertices is not equal to the number of vertices in the graph
@@ -24,9 +24,6 @@ def verifyCycle(graph: Graph) -> bool:
         for vertex in graph.listVertices:
             predecessors = list(vertex.previousVertices)
 
-            """print("Vertex: ", vertex.value)
-            for predecessor in predecessors:
-                print("Predecessor: ", predecessor.value)"""
             # if the vertex is not in the eliminate list and it has no more predecessors, we add it to the source vertices
             if vertex not in eliminateList: 
                 resultPredecessors = [p for p in predecessors if p not in eliminateList]
@@ -39,7 +36,7 @@ def verifyCycle(graph: Graph) -> bool:
 
         # if the source vertices list is empty after running through all vertices, there is a cycle in the graph
         if sourceVertices == [] and len(eliminateList) < len(graph.listVertices):
-            ecrire("\n\nCycle detected.")
+            ecrire("\nCycle detected.")
             return True # Cycle detected
 
         # we print the source and the remaining vertices step by step for the traces
@@ -60,15 +57,16 @@ def hasNegativeEdges(graph: Graph) -> bool:
     for vertex in graph.listVertices:
         for neighbor in vertex.previousVertices:
             if float(neighbor.duration) < 0:
-                print("Negative-weight edge detected.")
+                ecrire("\nNegative-weight edge detected : " + str(neighbor.value) + " -> " + str(vertex.value))
                 return True  # Negative edge detected
-    print("No negative-weight edge detected.")
+    ecrire("\nNo negative-weight edge detected.")
     return False  # No negative edge detected
 
 
 
 
 def computeRanks(graph: Graph) -> dict:
+    ecrire("\n\nComputing the ranks of the vertices in the graph.")
     # use of a dictionnary to store the ranks
     ranks = {vertex: 0 for vertex in graph.listVertices}
     eliminateList = []
@@ -76,6 +74,7 @@ def computeRanks(graph: Graph) -> dict:
     # same algorithm as verifyCycle, but simplified that handle the ranks of the vertices
     while len(eliminateList) < len(graph.listVertices):
         tempList = eliminateList.copy()
+        ecrire("\n-- Iteration " + str(k) +" --")
         for vertex in graph.listVertices:
             predecessors = list(vertex.previousVertices)
             if vertex not in eliminateList: 
@@ -84,16 +83,19 @@ def computeRanks(graph: Graph) -> dict:
                     tempList.append(vertex)
                     # assign the rank to the vertex
                     ranks[vertex] = k
+                    ecrire("\nRank of " + str(vertex.value) + " : " + str(k))
 
         eliminateList = tempList
         # increment the rank at each iteration
         k += 1
+
     return ranks
 
 
 
 
 def calculateEarliestDates(graph : Graph, ranks : dict) -> dict:
+    ecrire("\n\nCalculating the earliest dates of the vertices in the graph.")
     earliestDates = {vertex: 0 for vertex in graph.listVertices}
     omega = graph.listVertices[-1]
     for i in range(ranks[omega]+1):
@@ -101,8 +103,11 @@ def calculateEarliestDates(graph : Graph, ranks : dict) -> dict:
         for vertex in listVerticesOfRankI:
             if vertex.previousVertices != []:
                 earliestFinishDate = earliestDates[vertex.previousVertices[0]] + int(vertex.previousVertices[0].duration)
+                ecrire("\nWe keep the maximum value for vertex " + str(vertex.value) + " among earliest dates of predecessors : ")
                 for i in range(len(vertex.previousVertices)):
                     earliestFinishDate = max(earliestFinishDate, earliestDates[vertex.previousVertices[i]] + int(vertex.previousVertices[i].duration))
+                    ecrire(str(earliestDates[vertex.previousVertices[i]] + int(vertex.previousVertices[i].duration))+ " ")
+                ecrire("\nEarliest date of " + str(vertex.value) + " : " + str(earliestFinishDate))
                 earliestDates[vertex] =  earliestFinishDate
     return earliestDates
 
@@ -110,22 +115,29 @@ def calculateEarliestDates(graph : Graph, ranks : dict) -> dict:
 
 
 def calculateLatestDates(graph : Graph, ranks: dict, earliestDates: dict) -> dict:
+    ecrire("\n\nCalculating the latest dates of the vertices in the graph.")
     omega = graph.listVertices[-1]
     latestDates = {vertex: earliestDates[omega] for vertex in graph.listVertices}
     for i in range(ranks[omega]+1, 0, -1):
         listVerticesOfRankI = [k for k, v in ranks.items() if v==i]
         for vertex in listVerticesOfRankI:
+            ecrire("\nLatest date of " + str(vertex.value) + " : " + str(latestDates[vertex]))
+            ecrire("\nWe keep the minimum value for predecessors of vertex " + str(vertex.value) + " among lastest dates calculated : ")
             for previousVertex in vertex.previousVertices:
                 latestDates[previousVertex] = min(latestDates[previousVertex], latestDates[vertex] - int(previousVertex.duration))
+                ecrire(str(latestDates[vertex] - int(previousVertex.duration))+ " ")
+
     return latestDates
 
 
 
 
 def calculateFloats(earliestDates: dict, latestDates: dict, graph : Graph) -> dict:
+    ecrire("\n\nCalculating the floats of the vertices in the graph.")
     float = {vertex: 0 for vertex in graph.listVertices}
     for vertex in graph.listVertices:
         float[vertex] = latestDates[vertex] - earliestDates[vertex]
+        ecrire("\nFloat of " + str(vertex.value) + " : " + str(latestDates[vertex])+ " - " + str(earliestDates[vertex])+ " = " + str(float[vertex]))
     return float
 
 

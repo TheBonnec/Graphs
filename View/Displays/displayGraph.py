@@ -1,6 +1,7 @@
-from Model.Graph import Graph
 from tabulate import tabulate as tb
+from Model.Graph import Graph
 from View.Tools import *
+
 
 def displayGraph(graph : Graph) -> None:
     clearConsole()

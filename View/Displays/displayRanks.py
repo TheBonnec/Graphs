@@ -4,7 +4,6 @@ from Model.Graph import Graph
 from View.Tools import *
 
 
-
 def displayRanks(graph: Graph):
     clearConsole()
     title()

@@ -1,6 +1,7 @@
-from Model.Graph import Graph
 from Model.Vertex import Vertex
+from Model.Graph import Graph
 import copy
+
 
 def verifyCycle(graph: Graph) -> bool:
     # Rosalind Marimond Algorithm to verify if a graph contains a cycle
@@ -47,6 +48,8 @@ def verifyCycle(graph: Graph) -> bool:
     return False # No cycle detected
 
 
+
+
 def hasNegativeEdges(graph: Graph) -> bool:
     for vertex in graph.listVertices:
         for neighbor in vertex.previousVertices:
@@ -55,6 +58,8 @@ def hasNegativeEdges(graph: Graph) -> bool:
                 return True  # Negative edge detected
     print("No negative-weight edge detected.")
     return False  # No negative edge detected
+
+
 
 
 def computeRanks(graph: Graph) -> dict:
@@ -80,6 +85,8 @@ def computeRanks(graph: Graph) -> dict:
     return ranks
 
 
+
+
 def calculateEarliestDates(graph : Graph, ranks : dict) -> dict:
     earliestDates = {vertex: 0 for vertex in graph.listVertices}
     omega = graph.listVertices[-1]
@@ -94,6 +101,8 @@ def calculateEarliestDates(graph : Graph, ranks : dict) -> dict:
     return earliestDates
 
 
+
+
 def calculateLatestDates(graph : Graph, ranks: dict, earliestDates: dict) -> dict:
     omega = graph.listVertices[-1]
     latestDates = {vertex: earliestDates[omega] for vertex in graph.listVertices}
@@ -104,6 +113,9 @@ def calculateLatestDates(graph : Graph, ranks: dict, earliestDates: dict) -> dic
                 latestDates[previousVertex] = min(latestDates[previousVertex], latestDates[vertex] - int(previousVertex.duration))
     return latestDates
 
+
+
+
 def calculateFloats(earliestDates: dict, latestDates: dict, graph : Graph) -> dict:
     float = {vertex: 0 for vertex in graph.listVertices}
     for vertex in graph.listVertices:
@@ -111,7 +123,9 @@ def calculateFloats(earliestDates: dict, latestDates: dict, graph : Graph) -> di
     return float
 
 
-def calculateCriticalPath(float : dict, graph : Graph, ranks: dict):
+
+
+def calculateCriticalPath(float : dict, graph : Graph, ranks: dict) -> list:
     oneCriticalPath = []
     oneCriticalPath.append(graph.listVertices[0].value)
     listCriticalPath = []
@@ -129,5 +143,5 @@ def calculateCriticalPath(float : dict, graph : Graph, ranks: dict):
                 else :
                     for criticalPath in listCriticalPath:
                         criticalPath.append(vertex.value)
-        previousVertex = vertex
+            previousVertex = vertex
     return listCriticalPath

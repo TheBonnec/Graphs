@@ -1,7 +1,5 @@
-from Model.Graph import Graph
-from View.MainMenu import mainMenu
-from Model.Helper import verifyCycle, hasNegativeEdges, computeRanks # calculateLatestDates
 from View.Tools import clearConsole
+from View.MainMenu import mainMenu
 
 
 def main():

@@ -1,5 +1,5 @@
-from Model.Graph import Graph
 from tabulate import tabulate as tb
+from Model.Graph import Graph
 from Model.Helper import *
 from View.Tools import *
 

@@ -18,9 +18,6 @@ def verifyCycle(graph: Graph) -> bool:
         for vertex in graph.listVertices:
             predecessors = list(vertex.previousVertices)
 
-            """print("Vertex: ", vertex.value)
-            for predecessor in predecessors:
-                print("Predecessor: ", predecessor.value)"""
             # if the vertex is not in the eliminate list and it has no more predecessors, we add it to the source vertices
             if vertex not in eliminateList: 
                 resultPredecessors = [p for p in predecessors if p not in eliminateList]

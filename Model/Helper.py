@@ -1,6 +1,6 @@
 from Model.Graph import Graph
 from Model.Vertex import Vertex
-
+import copy
 
 def verifyCycle(graph: Graph) -> bool:
     # Rosalind Marimond Algorithm to verify if a graph contains a cycle
@@ -104,8 +104,6 @@ def calculateLatestDates(graph : Graph, ranks: dict, earliestDates: dict) -> dic
                 latestDates[previousVertex] = min(latestDates[previousVertex], latestDates[vertex] - int(previousVertex.duration))
     return latestDates
 
-
-
 def calculateFloats(earliestDates: dict, latestDates: dict, graph : Graph) -> dict:
     float = {vertex: 0 for vertex in graph.listVertices}
     for vertex in graph.listVertices:
@@ -113,44 +111,23 @@ def calculateFloats(earliestDates: dict, latestDates: dict, graph : Graph) -> di
     return float
 
 
-def calculateCriticalPath(float : dict, graph : Graph):
-    criticalPath = []
+def calculateCriticalPath(float : dict, graph : Graph, ranks: dict):
+    oneCriticalPath = []
+    oneCriticalPath.append(graph.listVertices[0].value)
+    listCriticalPath = []
+    listCriticalPath.append(oneCriticalPath)
+    previousVertex = graph.listVertices[0]
     for vertex in graph.listVertices:
         if float[vertex] == 0:
-            criticalPath.append(vertex.value)
-    return criticalPath
-
-
-
-"""
-def calculateLatestDates(graph: Graph, project_end_date: int) -> dict:
-    # Create a directed graph in NetworkX from the Graph object
-    G = nx.DiGraph()
-    for vertex in graph.listVertices:
-        vertex_duration = int(vertex.duration)
-        G.add_node(vertex.value, duration=vertex_duration) 
-        for predecessor in vertex.previousVertices:
-            G.add_edge(predecessor.value, vertex.value)
-
-    if not nx.is_directed_acyclic_graph(G):
-        raise ValueError("The graph contains a cycle, it's impossible to calculate the latest dates.")
-
-    # Initialize the latest start times with the project end date
-    latest_finish_times = {vertex: project_end_date for vertex in G.nodes}
-    latest_start_times = {vertex: project_end_date for vertex in G.nodes}
-
-    G_reverse = G.reverse()
-
-    for vertex in nx.topological_sort(G_reverse):
-        if G_reverse.out_degree(vertex) == 0:
-            latest_finish_times[vertex] = project_end_date
-        else:
-            min_latest_finish = project_end_date
-            for successor in G_reverse.successors(vertex):
-                successor_duration = G.nodes[successor]['duration']
-                min_latest_finish = min(min_latest_finish, latest_finish_times[successor] - successor_duration)
-            latest_finish_times[vertex] = min_latest_finish
-            latest_start_times[vertex] = latest_finish_times[vertex] - G.nodes[vertex]['duration']
-
-    return latest_start_times
-"""
+            if ranks[vertex] != 0 :
+                if ranks[vertex] == ranks[previousVertex]:
+                    anotherListCriticalPath = copy.deepcopy(listCriticalPath)
+                    for criticalPath in anotherListCriticalPath:
+                        criticalPath.pop()
+                        criticalPath.append(vertex.value)
+                    listCriticalPath = listCriticalPath + anotherListCriticalPath
+                else :
+                    for criticalPath in listCriticalPath:
+                        criticalPath.append(vertex.value)
+        previousVertex = vertex
+    return listCriticalPath

@@ -63,12 +63,36 @@ def displayMenu():
                         earliestDates = calculateEarliestDates(graph, ranks)
                         earliestDatesValues = list(earliestDates.values())
                         earliestDatesValues.insert(0, "Earliest Dates")
-                        """                        
-                        latestDates = calculateLatestDates(graph, earliestDatesValues[-1])
+                        latestDates = calculateLatestDates(graph, ranks, earliestDates)
                         latestDatesValues = list(latestDates.values())
                         latestDatesValues.insert(0,"Latest Dates")
-                        """
-                        print(tb([Vertices, ranksValues, earliestDatesValues], headers='firstrow'))
+                        floats = calculateFloats(earliestDates, latestDates, graph)
+                        floatsValues = list(floats.values())
+                        floatsValues.insert(0,"Floats")
+                        print(tb([Vertices, ranksValues, earliestDatesValues, latestDatesValues, floatsValues], headers='firstrow'))
+                case 5:
+                    if not verifyCycle(graph) and not hasNegativeEdges(graph):
+                        print("This is a scheduling graph.")
+                        print("\nComputing and displaying the ranks of each vertices of the graph...")
+                        ranks = computeRanks(graph)
+                        ranksValues = list(ranks.values())
+                        Vertices = [vertex.value for vertex in list(ranks.keys())]
+                        ranksValues.insert(0, "ranks")
+                        Vertices.insert(0, "Vertices")
+                        earliestDates = calculateEarliestDates(graph, ranks)
+                        earliestDatesValues = list(earliestDates.values())
+                        earliestDatesValues.insert(0, "Earliest Dates")                       
+                        latestDates = calculateLatestDates(graph, ranks, earliestDates)
+                        latestDatesValues = list(latestDates.values())
+                        latestDatesValues.insert(0,"Latest Dates")
+                        floats = calculateFloats(earliestDates, latestDates, graph)
+                        floatsValues = list(floats.values())
+                        floatsValues.insert(0,"Floats")
+                        print(tb([Vertices, ranksValues, earliestDatesValues, latestDatesValues, floatsValues], headers='firstrow'))
+                        criticalPath = calculateCriticalPath(floats, graph)
+                        criticalPathList = list(criticalPath)
+                        print("The critical path is : ",criticalPathList)
+
 
 
 

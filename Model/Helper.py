@@ -119,37 +119,34 @@ def pifPafPoufRemettreLeGrapheAlEndroit(graph: Graph) -> Graph:
 
 
 # Dijkstra's algorithm but trying with working by successors
-#def DijkstraAlgorithm(graph: Graph) -> dict:
-
-
-
-
-# Dijkstra's algorithm but trying with working by predecessors
 def DijkstraAlgorithm(graph: Graph) -> dict:
-    # use of a dictionnary to store the distances 
-    distances = {vertex: float('inf') for vertex in graph.listVertices}
-    orderVertices = {vertex: None for vertex in graph.listVertices}
+    # inverse the structure of data to have a graph working with successors
+    invertedGraph = invertGraph(graph)
 
+    # use of a dictionnary to store the distances
+    distances = {vertex: float('inf') for vertex in invertedGraph.listVertices}
+    orderVertices = {vertex: None for vertex in invertedGraph.listVertices}
+
+    # CC as the list of eliminate vertices, and M as the list of remaining vertices
     CC = [source for source in graph.listVertices if source.previousVertices == []]
-    distances[CC[0]] = 0
-    M = [vertex for vertex in graph.listVertices if vertex not in CC]
-    
-    while(len(CC) < len(graph.listVertices)):
-        tempList = CC.copy()
-        for vertex in M:
-            predecessors = list(vertex.previousVertices)
-            predecessorsCC = [p for p in predecessors if p in CC]
-            
-        
-        minV = min([distances[vertex] for vertex in M])
-        for vertex in M:
-            if distances[vertex] == minV:
-                tempList.append(vertex)
-        
-        M = [vertex for vertex in M if vertex not in tempList]
+    M = [vertex for vertex in invertedGraph.listVertices if vertex not in CC]
 
+    while(len(CC) < len(invertedGraph.listVertices)):
+        tempList = CC.copy()
+        for vertex in CC:
+            successors = list(vertex.nextVertices)
+            minVertex = None
+            for successor in successors:
+                if distances[successor] > distances[vertex] + vertex.duration:
+                    distances[successor] = distances[vertex] + vertex.duration
+                    if distances[successor] < distances[minVertex]:
+                        minVertex = successor
+            if minVertex is not None:
+                tempList.append(minVertex)
+                print("Vertex: ", vertex.value, " Successor: ", minVertex.value, " Distance: ", distances[minVertex])
+                
+        M = [vertex for vertex in M if vertex not in tempList]
         CC = tempList
-        print("CC: ", [vertex.value for vertex in CC])
 
     
 

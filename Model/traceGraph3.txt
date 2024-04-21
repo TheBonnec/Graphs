@@ -1,0 +1,138 @@
+
+   GRAPH 3 
+
+
+      0    1    2    3    4    5    6    7    8    9    10    11    12    13
+--  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ----  ----  ----  ----
+ 0    0    0    0    0    0    0    0    0    0    0     0     0     0     0
+ 1    0    0    0    2    0    0    0    0    0    0     0     0     0     0
+ 2    0    0    0    5    5    0    0    0    0    0     0     0     0     0
+ 3    0    0    0    0    0    0    0    0    0    0     0     0     4     0
+ 4    0    0    0    2    0    2    0    0    2    0     0     2     0     0
+ 5    0    0    0    0    0    0    5    0    0    5     0     0     0     0
+ 6    0    0    0    0    0    0    0    5    5    5     0     0     0     0
+ 7    0    0    0    0    0    0    0    0    9    9     0     0     0     0
+ 8    0    0    0    0    0    0    0    0    0    0     0     0     0     1
+ 9    0    0    0    0    0    0    0    0    0    0     0     0     0     5
+10    0    0    0    0    0    0    0    0    0    0     0     0     0     9
+11    0    0    0    0    0    0    0    0    0    0     1     0     0     0
+12    0    0    0    0    0    0    0    0    1    0     0     0     0     0
+13    0    0    0    0    0    0    0    0    0    0     0     0     0     0
+
+Detecting the cycle, by using the elimination by predecessors method.
+Source vertices: ['0']
+Eliminating source vertices...
+Remaining vertices: 1 2 3 4 5 6 7 8 9 10 11 12 13 
+Source vertices: ['1', '2']
+Eliminating source vertices...
+Remaining vertices: 3 4 5 6 7 8 9 10 11 12 13 
+Source vertices: ['4']
+Eliminating source vertices...
+Remaining vertices: 3 5 6 7 8 9 10 11 12 13 
+Source vertices: ['3', '5', '11']
+Eliminating source vertices...
+Remaining vertices: 6 7 8 9 10 12 13 
+Source vertices: ['6', '10', '12']
+Eliminating source vertices...
+Remaining vertices: 7 8 9 13 
+Source vertices: ['7']
+Eliminating source vertices...
+Remaining vertices: 8 9 13 
+Source vertices: ['8', '9']
+Eliminating source vertices...
+Remaining vertices: 13 
+Source vertices: ['13']
+Eliminating source vertices...
+Remaining vertices: None
+No cycle detected.
+No negative-weight edge detected.
+
+ ==> This graph can be a scheduling graph.
+
+
+Computing the ranks of the vertices in the graph.
+-- Iteration 0 --
+Rank of 0 : 0
+-- Iteration 1 --
+Rank of 1 : 1
+Rank of 2 : 1
+-- Iteration 2 --
+Rank of 4 : 2
+-- Iteration 3 --
+Rank of 3 : 3
+Rank of 5 : 3
+Rank of 11 : 3
+-- Iteration 4 --
+Rank of 6 : 4
+Rank of 10 : 4
+Rank of 12 : 4
+-- Iteration 5 --
+Rank of 7 : 5
+-- Iteration 6 --
+Rank of 8 : 6
+Rank of 9 : 6
+-- Iteration 7 --
+Rank of 13 : 7
+
+Calculating the earliest dates of the vertices in the graph.
+We are going to keep the maximum value for each vertex among the earliest dates of predecessors.
+The maximum value for vertex 1 among : 0 
+--> Earliest date of 1 : 0
+The maximum value for vertex 2 among : 0 
+--> Earliest date of 2 : 0
+The maximum value for vertex 4 among : 5 
+--> Earliest date of 4 : 5
+The maximum value for vertex 3 among : 2 5 7 
+--> Earliest date of 3 : 7
+The maximum value for vertex 5 among : 7 
+--> Earliest date of 5 : 7
+The maximum value for vertex 11 among : 7 
+--> Earliest date of 11 : 7
+The maximum value for vertex 6 among : 12 
+--> Earliest date of 6 : 12
+The maximum value for vertex 10 among : 8 
+--> Earliest date of 10 : 8
+The maximum value for vertex 12 among : 11 
+--> Earliest date of 12 : 11
+The maximum value for vertex 7 among : 17 
+--> Earliest date of 7 : 17
+The maximum value for vertex 8 among : 7 17 26 12 
+--> Earliest date of 8 : 26
+The maximum value for vertex 9 among : 12 17 26 
+--> Earliest date of 9 : 26
+The maximum value for vertex 13 among : 27 31 17 
+--> Earliest date of 13 : 31
+
+Calculating the latest dates of the vertices in the graph.
+We are going to keep the minimum value of predecessors latest dates of each vertex among the latest dates calculated.
+--> Latest date of 13 : 31
+--> Latest date of 8 : 30
+--> Latest date of 9 : 26
+--> Latest date of 7 : 17
+--> Latest date of 6 : 12
+--> Latest date of 10 : 22
+--> Latest date of 12 : 29
+--> Latest date of 3 : 25
+--> Latest date of 5 : 7
+--> Latest date of 11 : 21
+--> Latest date of 4 : 5
+--> Latest date of 1 : 23
+--> Latest date of 2 : 0
+
+Calculating the floats of the vertices in the graph.
+Float of 0 : 0 - 0 = 0
+Float of 1 : 23 - 0 = 23
+Float of 2 : 0 - 0 = 0
+Float of 3 : 25 - 7 = 18
+Float of 4 : 5 - 5 = 0
+Float of 5 : 7 - 7 = 0
+Float of 6 : 12 - 12 = 0
+Float of 7 : 17 - 17 = 0
+Float of 8 : 30 - 26 = 4
+Float of 9 : 26 - 26 = 0
+Float of 10 : 22 - 8 = 14
+Float of 11 : 21 - 7 = 14
+Float of 12 : 29 - 11 = 18
+Float of 13 : 31 - 31 = 0
+
+ ==> The critical path of this graph is : 0 --> 2 --> 4 --> 5 --> 6 --> 7 --> 9 --> 13

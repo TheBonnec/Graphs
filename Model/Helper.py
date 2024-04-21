@@ -4,7 +4,7 @@ import copy
 
 
 def ecrire(contenu):
-    nom_fichier = "Model/traceFile.txt"
+    nom_fichier = "Model/traceGraph12.txt"
     with open(nom_fichier, 'a') as fichier:
         fichier.write(contenu)
 
@@ -96,6 +96,7 @@ def computeRanks(graph: Graph) -> dict:
 
 def calculateEarliestDates(graph : Graph, ranks : dict) -> dict:
     ecrire("\n\nCalculating the earliest dates of the vertices in the graph.")
+    ecrire("\nWe are going to keep the maximum value for each vertex among the earliest dates of predecessors.")
     earliestDates = {vertex: 0 for vertex in graph.listVertices}
     omega = graph.listVertices[-1]
     for i in range(ranks[omega]+1):
@@ -103,11 +104,11 @@ def calculateEarliestDates(graph : Graph, ranks : dict) -> dict:
         for vertex in listVerticesOfRankI:
             if vertex.previousVertices != []:
                 earliestFinishDate = earliestDates[vertex.previousVertices[0]] + int(vertex.previousVertices[0].duration)
-                ecrire("\nWe keep the maximum value for vertex " + str(vertex.value) + " among earliest dates of predecessors : ")
+                ecrire("\nThe maximum value for vertex " + str(vertex.value) + " among : ")
                 for i in range(len(vertex.previousVertices)):
                     earliestFinishDate = max(earliestFinishDate, earliestDates[vertex.previousVertices[i]] + int(vertex.previousVertices[i].duration))
                     ecrire(str(earliestDates[vertex.previousVertices[i]] + int(vertex.previousVertices[i].duration))+ " ")
-                ecrire("\nEarliest date of " + str(vertex.value) + " : " + str(earliestFinishDate))
+                ecrire("\n--> Earliest date of " + str(vertex.value) + " : " + str(earliestFinishDate))
                 earliestDates[vertex] =  earliestFinishDate
     return earliestDates
 
@@ -116,16 +117,16 @@ def calculateEarliestDates(graph : Graph, ranks : dict) -> dict:
 
 def calculateLatestDates(graph : Graph, ranks: dict, earliestDates: dict) -> dict:
     ecrire("\n\nCalculating the latest dates of the vertices in the graph.")
+    ecrire("\nWe are going to keep the minimum value of predecessors latest dates of each vertex among the latest dates calculated.")
     omega = graph.listVertices[-1]
     latestDates = {vertex: earliestDates[omega] for vertex in graph.listVertices}
     for i in range(ranks[omega]+1, 0, -1):
         listVerticesOfRankI = [k for k, v in ranks.items() if v==i]
         for vertex in listVerticesOfRankI:
-            ecrire("\nLatest date of " + str(vertex.value) + " : " + str(latestDates[vertex]))
-            ecrire("\nWe keep the minimum value for predecessors of vertex " + str(vertex.value) + " among lastest dates calculated : ")
+            ecrire("\n--> Latest date of " + str(vertex.value) + " : " + str(latestDates[vertex]))
+            
             for previousVertex in vertex.previousVertices:
                 latestDates[previousVertex] = min(latestDates[previousVertex], latestDates[vertex] - int(previousVertex.duration))
-                ecrire(str(latestDates[vertex] - int(previousVertex.duration))+ " ")
 
     return latestDates
 

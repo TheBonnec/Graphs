@@ -1,0 +1,118 @@
+
+   GRAPH 11 
+
+
+      0    1    2    3    4    5    6    7    8    9
+--  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---
+ 0    0    0    0    0    0    0    0    0    0    0
+ 1    0    0    1    0    1    1    0    0    0    0
+ 2    0    0    0    1    0    0    0    0    1    0
+ 3    0    0    0    0    0    0    0    4    0    0
+ 4    0    0    2    0    0    0    2    0    2    0
+ 5    0    0    0    0    5    0    5    5    0    0
+ 6    0    0    0    0    0    0    0    0    6    0
+ 7    0    0    0    0    0    0    0    0    3    0
+ 8    0    0    0    0    0    0    0    0    0    0
+ 9    0    0    0    0    0    0    0    0    0    0
+
+Detecting the cycle, by using the elimination by predecessors method.
+Source vertices: ['0']
+Eliminating source vertices...
+Remaining vertices: 1 2 3 4 5 6 7 8 9 
+Source vertices: ['1']
+Eliminating source vertices...
+Remaining vertices: 2 3 4 5 6 7 8 9 
+Source vertices: ['5']
+Eliminating source vertices...
+Remaining vertices: 2 3 4 6 7 8 9 
+Source vertices: ['4']
+Eliminating source vertices...
+Remaining vertices: 2 3 6 7 8 9 
+Source vertices: ['2', '6']
+Eliminating source vertices...
+Remaining vertices: 3 7 8 9 
+Source vertices: ['3']
+Eliminating source vertices...
+Remaining vertices: 7 8 9 
+Source vertices: ['7']
+Eliminating source vertices...
+Remaining vertices: 8 9 
+Source vertices: ['8']
+Eliminating source vertices...
+Remaining vertices: 9 
+Source vertices: ['9']
+Eliminating source vertices...
+Remaining vertices: None
+No cycle detected.
+No negative-weight edge detected.
+
+ ==> This graph can be a scheduling graph.
+
+
+Computing the ranks of the vertices in the graph.
+-- Iteration 0 --
+Rank of 0 : 0
+-- Iteration 1 --
+Rank of 1 : 1
+-- Iteration 2 --
+Rank of 5 : 2
+-- Iteration 3 --
+Rank of 4 : 3
+-- Iteration 4 --
+Rank of 2 : 4
+Rank of 6 : 4
+-- Iteration 5 --
+Rank of 3 : 5
+-- Iteration 6 --
+Rank of 7 : 6
+-- Iteration 7 --
+Rank of 8 : 7
+-- Iteration 8 --
+Rank of 9 : 8
+
+Calculating the earliest dates of the vertices in the graph.
+We are going to keep the maximum value for each vertex among the earliest dates of predecessors.
+The maximum value for vertex 1 among : 0 
+--> Earliest date of 1 : 0
+The maximum value for vertex 5 among : 1 
+--> Earliest date of 5 : 1
+The maximum value for vertex 4 among : 1 6 
+--> Earliest date of 4 : 6
+The maximum value for vertex 2 among : 1 8 
+--> Earliest date of 2 : 8
+The maximum value for vertex 6 among : 8 6 
+--> Earliest date of 6 : 8
+The maximum value for vertex 3 among : 9 
+--> Earliest date of 3 : 9
+The maximum value for vertex 7 among : 13 6 
+--> Earliest date of 7 : 13
+The maximum value for vertex 8 among : 9 8 14 16 
+--> Earliest date of 8 : 16
+The maximum value for vertex 9 among : 16 
+--> Earliest date of 9 : 16
+
+Calculating the latest dates of the vertices in the graph.
+We are going to keep the minimum value of predecessors latest dates of each vertex among the latest dates calculated.
+--> Latest date of 9 : 16
+--> Latest date of 8 : 16
+--> Latest date of 7 : 13
+--> Latest date of 3 : 9
+--> Latest date of 2 : 8
+--> Latest date of 6 : 10
+--> Latest date of 4 : 6
+--> Latest date of 5 : 1
+--> Latest date of 1 : 0
+
+Calculating the floats of the vertices in the graph.
+Float of 0 : 0 - 0 = 0
+Float of 1 : 0 - 0 = 0
+Float of 2 : 8 - 8 = 0
+Float of 3 : 9 - 9 = 0
+Float of 4 : 6 - 6 = 0
+Float of 5 : 1 - 1 = 0
+Float of 6 : 10 - 8 = 2
+Float of 7 : 13 - 13 = 0
+Float of 8 : 16 - 16 = 0
+Float of 9 : 16 - 16 = 0
+
+ ==> The critical path of this graph is : 0 --> 1 --> 2 --> 3 --> 4 --> 5 --> 7 --> 8 --> 9

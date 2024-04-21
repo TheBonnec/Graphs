@@ -1,12 +1,8 @@
 from tabulate import tabulate as tb
 from Model.Graph import Graph
 from View.Tools import *
+from Model.Helper import ecrire
 
-
-def ecrire(contenu):
-    nom_fichier = "Model/traceFile.txt"
-    with open(nom_fichier, 'a') as fichier:
-        fichier.write(contenu)
 
 def displayGraph(graph : Graph) -> None:
     clearConsole()

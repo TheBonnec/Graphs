@@ -1,0 +1,44 @@
+
+   GRAPH 12 
+
+
+      0    1    2    3    4    5    6    7    8    9    10    11    12    13
+--  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ----  ----  ----  ----
+ 0    0    0    0    0    0    0    0    0    0    0     0     0     0     0
+ 1    0    0    0   10   10    0    0    0    0    0     0     0    10     0
+ 2    0    0    0   10   10    0    0    0    0    0     0     0     0     0
+ 3    0    0    0    0    0    0    0    0    0    9     0     0     0     0
+ 4    0    0    0    0    0    5    0    5    0    5     0     0     0     0
+ 5    0    0    0    0    0    0    4    0    4    0     0     0     0     0
+ 6    0    0    0    0    0    0    0    0    0    0     0     2     2     0
+ 7    0    0    0    0    0    0    0    0    2    0     0     0     0     0
+ 8    0    0    0    0    0    0    0    0    0    0     0     4     0     0
+ 9    0    0    0    0    0    0    0    0    8    0     8     0     0     0
+10    0    0    0   12    0    0    0    0    0    0     0    12     0     0
+11    0    0    0    0    0    0    0    0    0    0     0     0     0     2
+12    0    0    0    0    0    0    0    0    0    0     0     0     0    20
+13    0    0    0    0    0    0    0    0    0    0     0     0     0     0
+
+Detecting the cycle, by using the elimination by predecessors method.
+Source vertices: ['0']
+Eliminating source vertices...
+Remaining vertices: 1 2 3 4 5 6 7 8 9 10 11 12 13 
+Source vertices: ['1', '2']
+Eliminating source vertices...
+Remaining vertices: 3 4 5 6 7 8 9 10 11 12 13 
+Source vertices: ['4']
+Eliminating source vertices...
+Remaining vertices: 3 5 6 7 8 9 10 11 12 13 
+Source vertices: ['5', '7']
+Eliminating source vertices...
+Remaining vertices: 3 6 8 9 10 11 12 13 
+Source vertices: ['6']
+Eliminating source vertices...
+Remaining vertices: 3 8 9 10 11 12 13 
+Source vertices: ['12']
+Eliminating source vertices...
+Remaining vertices: 3 8 9 10 11 13 
+Cycle detected.
+
+ ==> This graph cannot be a scheduling graph.
+

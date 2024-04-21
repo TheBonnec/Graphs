@@ -89,9 +89,9 @@ def displayMenu():
                         floatsValues = list(floats.values())
                         floatsValues.insert(0,"Floats")
                         print(tb([Vertices, ranksValues, earliestDatesValues, latestDatesValues, floatsValues], headers='firstrow'))
-                        criticalPath = calculateCriticalPath(floats, graph)
+                        criticalPath = calculateCriticalPath(floats, graph, ranks)
                         criticalPathList = list(criticalPath)
-                        print("The critical path is : ",criticalPathList)
+                        print("The critical path(s) is (are) : ",criticalPathList)
 
 
 

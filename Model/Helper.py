@@ -2,7 +2,6 @@ from Model.Graph import Graph
 from Model.Vertex import Vertex
 
 
-
 def verifyCycle(graph: Graph) -> bool:
     # Rosalind Marimond Algorithm to verify if a graph contains a cycle
     print("\nDetecting the cycle, by using the elimination by predecessors method.")

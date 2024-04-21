@@ -3,9 +3,15 @@ from Model.Graph import Graph
 import copy
 
 
+def ecrire(contenu):
+    nom_fichier = "Model/traceFile.txt"
+    with open(nom_fichier, 'a') as fichier:
+        fichier.write(contenu)
+
+
 def verifyCycle(graph: Graph) -> bool:
     # Rosalind Marimond Algorithm to verify if a graph contains a cycle
-    print("\nDetecting the cycle, by using the elimination by predecessors method.")
+    ecrire("\nDetecting the cycle, by using the elimination by predecessors method.")
 
     eliminateList = []
     # we iterate while the eliminate vertices is not equal to the number of vertices in the graph
@@ -33,18 +39,18 @@ def verifyCycle(graph: Graph) -> bool:
 
         # if the source vertices list is empty after running through all vertices, there is a cycle in the graph
         if sourceVertices == [] and len(eliminateList) < len(graph.listVertices):
-            print("\n\nCycle detected.")
+            ecrire("\n\nCycle detected.")
             return True # Cycle detected
 
         # we print the source and the remaining vertices step by step for the traces
-        print("\nSource vertices: ", sourceVertices)
-        print("Eliminating source vertices...")
-        print("Remaining vertices: ", end = "")
-        if remainingVertices == []: print("None")
+        ecrire("\nSource vertices: " + str(sourceVertices))
+        ecrire("\nEliminating source vertices...")
+        ecrire("\nRemaining vertices: ")
+        if remainingVertices == []: ecrire("None")
         for vertex in remainingVertices:
-            print(vertex.value, end = " ")
+            ecrire(str(vertex.value) + " ")
 
-    print("\nNo cycle detected.")
+    ecrire("\nNo cycle detected.")
     return False # No cycle detected
 
 
